@@ -1,18 +1,16 @@
+language: python
+
+python:
+  - 2.7
+  - 3.6
+  - 3.7
+
 os:
   - linux
   - osx
 
 env:
   - TARGET_TSLEARN_VERSION="0.2.4"
-
-matrix:
-  include:
-    - python: 2.7
-      env: TOXENV=py27
-    - python: 3.6
-      env: TOXENV=py36
-    - python: 3.7
-      env: TOXENV=py37
 
 install:
 - sudo apt-get update
@@ -32,7 +30,8 @@ install:
 - pip install cesium pytest
 
 script:
-- conda press --subdir ${TRAVIS_OS_NAME}-64 --skip-python --fatten tslearn=${TARGET_TSLEARN_VERSION}=${TOXENV}* -output tslearn-${TARGET_TSLEARN_VERSION}-${TOXENV}-${TRAVIS_OS_NAME}.whl;
+- export TOXENV="py${TRAVIS_PYTHON_VERSION/./}"
+- conda press --subdir ${TRAVIS_OS_NAME}-64 --skip-python --fatten tslearn=${TARGET_TSLEARN_VERSION}=${TOXENV}* -o tslearn-${TARGET_TSLEARN_VERSION}-${TOXENV}-${TRAVIS_OS_NAME}.whl;
 - pip install tslearn-${TARGET_TSLEARN_VERSION}-${TOXENV}-${TRAVIS_OS_NAME}.whl;
 - pytest --pyargs tslearn
 
