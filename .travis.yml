@@ -31,8 +31,8 @@ install:
 
 script:
 - export TOXENV="py${TRAVIS_PYTHON_VERSION/./}"
-- conda press --subdir ${TRAVIS_OS_NAME}-64 --skip-python --fatten tslearn=${TARGET_TSLEARN_VERSION}=${TOXENV}* -o tslearn-${TARGET_TSLEARN_VERSION}-${TOXENV}-${TRAVIS_OS_NAME}.whl;
-- pip install tslearn-${TARGET_TSLEARN_VERSION}-${TOXENV}-${TRAVIS_OS_NAME}.whl;
+- export FNAME_WHEEL=`conda press --subdir ${TRAVIS_OS_NAME}-64 --skip-python --fatten tslearn=${TARGET_TSLEARN_VERSION}=${TOXENV}* | tail -1 | cut -d' ' -f4`
+- pip install ${FNAME_WHEEL};
 - pytest --pyargs tslearn
 
 #after_success:
