@@ -10,7 +10,7 @@ os:
   - osx
 
 env:
-  - TARGET_TSLEARN_VERSION="0.2.4"
+  - TARGET_TSLEARN_VERSION="0.2.5"
 
 install:
 - sudo apt-get update
